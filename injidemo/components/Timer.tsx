@@ -1,10 +1,29 @@
-export function Timer() {
+"use client";
+
+import { useEffect, useState } from "react";
+
+export function Timer({ expiresAt }: { expiresAt: number }) {
+  const [timeLeft, setTimeLeft] = useState<number>(0);
+
+  useEffect(() => {
+    if (!expiresAt) return;
+
+    const interval = setInterval(() => {
+      const diff = Math.max(0, expiresAt - Date.now());
+      setTimeLeft(diff);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [expiresAt]);
+
+  const minutes = Math.floor(timeLeft / 60000);
+  const seconds = Math.floor((timeLeft % 60000) / 1000);
+
+  const formatted = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+
   return (
-    <div className="inline-flex items-center justify-center gap-1.5 text-amber-600 font-mono text-base font-bold tracking-tight">
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-      Expires in 05:00
-    </div>
+    <p className="text-amber-600 font-semibold text-lg">
+      Expires in {formatted}
+    </p>
   );
 }
