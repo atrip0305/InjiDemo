@@ -161,11 +161,13 @@ This is a prototype and does not include:
 ## Getting Started
 
 ### Installation
-npm install
-npm run dev
+1)npm install
 
+2)cd injidemo
 
-Open: http://localhost:3000
+3)npm run dev
+
+4)Open: http://localhost:3000
 
 
 ### Repository Structure
